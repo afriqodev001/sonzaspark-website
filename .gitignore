@@ -1,0 +1,8 @@
+node_modules/
+temporary screenshots/
+*.log
+.DS_Store
+Thumbs.db
+
+# Internal strategy / planning notes — not for public repo
+_brief/

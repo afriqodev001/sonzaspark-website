@@ -1,0 +1,1292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SonzaSpark — Spark curiosity. Build real things.</title>
+<meta name="description" content="SonzaSpark is a hands-on STEM program for young builders. Robotics, coding, 3D printing, electronics and fabrication through weekend classes, holiday bootcamps and school STEM clubs. Developed by HyracTech." />
+<link rel="icon" type="image/svg+xml" href="brand_assets/sonzaspark-logo.svg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300..900;1,300..900&display=swap" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'orange':      '#f97316',
+          'orange-dark': '#c2410c',
+          'orange-light':'#fb923c',
+          'orange-50':   '#FFF7ED',
+          'blue':        '#3b82f6',
+          'blue-dark':   '#1e40af',
+          'blue-900':    '#1e3a8a',
+          'blue-light':  '#60a5fa',
+          'blue-50':     '#EFF6FF',
+          'cream':       '#FFFBF5',
+          'ink':         '#0F172A',
+          'ink-2':       '#1E293B',
+          'muted':       '#475569',
+          'line':        '#E2E8F0',
+        },
+        fontFamily: {
+          sans: ['Nunito', 'system-ui', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root {
+    --orange: #f97316;
+    --orange-dark: #c2410c;
+    --orange-light: #fb923c;
+    --orange-50: #FFF7ED;
+    --blue: #3b82f6;
+    --blue-dark: #1e40af;
+    --blue-900: #1e3a8a;
+    --blue-light: #60a5fa;
+    --blue-50: #EFF6FF;
+    --cream: #FFFBF5;
+    --cream-2: #FFF4E6;
+    --ink: #0F172A;
+    --ink-2: #1E293B;
+    --muted: #475569;
+    --muted-2: #64748B;
+    --line: #E2E8F0;
+    --line-2: #CBD5E1;
+    --white: #FFFFFF;
+  }
+
+  * { -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', system-ui, sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  /* Container */
+  .wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  @media (min-width: 768px) { .wrap { padding-left: 2rem; padding-right: 2rem; } }
+  @media (min-width: 1200px) { .wrap { padding-left: 3rem; padding-right: 3rem; } }
+
+  /* Eyebrow */
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+  .eyebrow-blue { color: var(--blue-dark); }
+  .eyebrow-muted { color: var(--muted); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.95rem 1.5rem;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    line-height: 1;
+    transition: transform 240ms cubic-bezier(.2,.9,.3,1.2),
+                background-color 180ms ease,
+                color 180ms ease,
+                box-shadow 240ms ease,
+                border-color 180ms ease;
+    will-change: transform;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    box-shadow: 0 10px 24px -10px rgba(249,115,22,0.6),
+                inset 0 1px 0 rgba(255,255,255,0.18);
+  }
+  .btn-primary:hover {
+    background: var(--orange-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -14px rgba(194,65,12,0.6),
+                inset 0 1px 0 rgba(255,255,255,0.22);
+  }
+  .btn-primary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+  .btn-blue {
+    background: var(--blue);
+    color: #fff;
+    box-shadow: 0 10px 24px -10px rgba(59,130,246,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.18);
+  }
+  .btn-blue:hover {
+    background: var(--blue-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -14px rgba(30,64,175,0.55);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 2px solid var(--line-2);
+  }
+  .btn-outline:hover {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+    transform: translateY(-2px);
+  }
+  .btn-outline-blue {
+    background: transparent;
+    color: var(--blue-dark);
+    border: 2px solid var(--blue);
+  }
+  .btn-outline-blue:hover {
+    background: var(--blue);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+  .btn:active { transform: translateY(0); }
+
+  /* Nav link */
+  .nav-link {
+    position: relative;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    padding: 6px 2px;
+    transition: color 180ms ease;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 2px; right: 2px; bottom: -4px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--orange);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 280ms cubic-bezier(.2,.9,.3,1.1);
+  }
+  .nav-link:hover,
+  .nav-link:focus-visible { color: var(--orange-dark); outline: none; }
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after { transform: scaleX(1); }
+
+  /* Headings */
+  h1, h2, h3, h4 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; color: var(--ink); }
+  .h-xl { font-size: clamp(2.6rem, 6.6vw, 5rem); line-height: 1.02; letter-spacing: -0.035em; font-weight: 800; }
+  .h-lg { font-size: clamp(2rem, 4.4vw, 3.2rem); line-height: 1.08; letter-spacing: -0.03em; font-weight: 800; }
+  .h-md { font-size: clamp(1.35rem, 2.2vw, 1.65rem); line-height: 1.2; font-weight: 800; }
+  .h-sm { font-size: 1.1rem; line-height: 1.3; font-weight: 700; }
+
+  /* Hero */
+  .hero {
+    background:
+      radial-gradient(circle at 100% 0%, rgba(249,115,22,0.14), transparent 42%),
+      radial-gradient(ellipse at 0% 110%, rgba(59,130,246,0.14), transparent 48%),
+      linear-gradient(165deg, #FFFEFB 0%, #FFF7ED 60%, #FFF4E0 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-dots {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle at 1px 1px, rgba(15,23,42,0.08) 1px, transparent 0);
+    background-size: 32px 32px;
+    opacity: 0.4;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+  }
+
+  /* Chip */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+    box-shadow: 0 4px 12px -4px rgba(15,23,42,0.08);
+  }
+  .chip-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+  .chip-sq {
+    width: 20px; height: 20px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+    background: var(--blue-50);
+    color: var(--blue-dark);
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  /* Card base */
+  .card {
+    position: relative;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 20px;
+    padding: 1.75rem;
+    transition: transform 320ms cubic-bezier(.2,.9,.3,1.1),
+                border-color 220ms ease,
+                box-shadow 320ms ease;
+    will-change: transform;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--orange-light);
+    box-shadow:
+      0 24px 44px -22px rgba(249,115,22,0.3),
+      0 2px 8px -2px rgba(15,23,42,0.06);
+  }
+
+  /* Card hover variant (blue accent) */
+  .card.card-blue:hover {
+    border-color: var(--blue-light);
+    box-shadow:
+      0 24px 44px -22px rgba(59,130,246,0.3),
+      0 2px 8px -2px rgba(15,23,42,0.06);
+  }
+
+  /* Icon chip */
+  .ico {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--orange-50);
+    color: var(--orange-dark);
+    position: relative;
+    box-shadow: 0 6px 14px -8px rgba(249,115,22,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .ico.blue {
+    background: var(--blue-50);
+    color: var(--blue-dark);
+    box-shadow: 0 6px 14px -8px rgba(59,130,246,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+
+  /* Pill */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--orange-50);
+    color: var(--orange-dark);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    border: 1.5px solid rgba(249,115,22,0.2);
+  }
+  .pill-blue { background: var(--blue-50); color: var(--blue-dark); border-color: rgba(59,130,246,0.2); }
+  .pill-gray { background: var(--line); color: var(--ink-2); border-color: var(--line-2); }
+  .pill-dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  /* Big stat */
+  .stat-num {
+    font-size: clamp(2.6rem, 5.6vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .stat-num .accent { color: var(--orange); }
+  .stat-num .accent-b { color: var(--blue); }
+  .stat-lbl {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    font-weight: 700;
+  }
+
+  /* Dark CTA (orange+blue radial glows on deep blue) */
+  .dark-cta {
+    background:
+      radial-gradient(ellipse at 15% 20%, rgba(249,115,22,0.3), transparent 55%),
+      radial-gradient(ellipse at 90% 90%, rgba(96,165,250,0.4), transparent 60%),
+      linear-gradient(135deg, #0F172A 0%, #1e3a8a 100%);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Announcement bar */
+  .announce {
+    background: var(--ink);
+    color: #fff;
+  }
+  .announce a { color: var(--orange-light); font-weight: 700; }
+  .announce a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Header */
+  .site-header {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1.5px solid transparent;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    transition: border-color 220ms ease, box-shadow 220ms ease;
+  }
+  .site-header.scrolled {
+    border-bottom-color: var(--line);
+    box-shadow: 0 4px 16px -12px rgba(15,23,42,0.2);
+  }
+
+  /* Mobile menu */
+  .mobile-panel {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(360px, 100%);
+    background: #fff;
+    z-index: 70;
+    transform: translateX(100%);
+    transition: transform 320ms cubic-bezier(.2,.9,.3,1.1);
+    border-left: 1.5px solid var(--line);
+  }
+  .mobile-panel.open { transform: translateX(0); }
+  .mobile-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.5);
+    z-index: 69;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 240ms ease;
+  }
+  .mobile-backdrop.show { opacity: 1; pointer-events: auto; }
+
+  /* Hero featured project */
+  .featured {
+    position: relative;
+    background: #fff;
+    border-radius: 28px;
+    padding: 14px;
+    box-shadow:
+      0 40px 80px -30px rgba(15,23,42,0.3),
+      0 20px 40px -20px rgba(249,115,22,0.2),
+      inset 0 1px 0 rgba(255,255,255,1);
+    border: 1.5px solid var(--line);
+    overflow: visible;
+  }
+  .featured-img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 20px;
+    object-fit: cover;
+    display: block;
+    background: var(--cream);
+  }
+  .featured-caption {
+    position: absolute;
+    left: -20px;
+    bottom: 60px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: 0 24px 40px -20px rgba(15,23,42,0.3);
+    border: 1.5px solid var(--line);
+    max-width: 240px;
+    transform: rotate(-3deg);
+  }
+  .featured-tag {
+    position: absolute;
+    right: -16px;
+    top: 40px;
+    background: var(--orange);
+    color: #fff;
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 20px 36px -16px rgba(249,115,22,0.6);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transform: rotate(4deg);
+  }
+  @media (max-width: 640px) {
+    .featured-caption { left: 10px; bottom: 24px; max-width: 220px; transform: rotate(-2deg); }
+    .featured-tag { right: 8px; top: 20px; transform: rotate(3deg); font-size: 11px; padding: 8px 12px; }
+  }
+
+  /* Project card photo + caption */
+  .proj {
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 300ms cubic-bezier(.2,.9,.3,1.1),
+                border-color 220ms, box-shadow 300ms;
+  }
+  .proj:hover {
+    transform: translateY(-5px);
+    border-color: var(--orange-light);
+    box-shadow:
+      0 28px 48px -24px rgba(249,115,22,0.3),
+      0 2px 10px -3px rgba(15,23,42,0.06);
+  }
+  .proj-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    background: var(--cream);
+  }
+  .proj-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.65rem; flex: 1; }
+
+  /* Country operator row */
+  .op-row {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 18px;
+    transition: border-color 220ms, transform 240ms, background 220ms;
+  }
+  .op-row:hover {
+    border-color: var(--orange-light);
+    background: var(--cream);
+    transform: translateY(-2px);
+  }
+  .op-flag {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+    color: #fff;
+    box-shadow: 0 10px 20px -10px rgba(249,115,22,0.5);
+  }
+  .op-flag.blue {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+    box-shadow: 0 10px 20px -10px rgba(59,130,246,0.5);
+  }
+  .op-flag.gray {
+    background: linear-gradient(135deg, var(--muted-2) 0%, var(--ink-2) 100%);
+    box-shadow: 0 10px 20px -10px rgba(71,85,105,0.4);
+  }
+
+  /* Spark decoration */
+  .spark-bg {
+    position: absolute;
+    pointer-events: none;
+    width: 420px;
+    height: 420px;
+    opacity: 0.06;
+  }
+
+  /* Reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 600ms ease, transform 600ms cubic-bezier(.2,.9,.3,1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+
+  /* Divider */
+  .divider {
+    width: 48px;
+    height: 4px;
+    border-radius: 4px;
+    background: var(--orange);
+  }
+
+  /* How-it-runs mini-card */
+  .runs {
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 18px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: transform 280ms cubic-bezier(.2,.9,.3,1.1),
+                border-color 220ms, box-shadow 300ms;
+  }
+  .runs:hover {
+    transform: translateY(-3px);
+    border-color: var(--blue-light);
+    box-shadow: 0 22px 40px -22px rgba(59,130,246,0.3);
+  }
+</style>
+</head>
+<body>
+
+<!-- ───────────────────────── Announcement bar ───────────────────────── -->
+<div class="announce text-[13px]">
+  <div class="wrap py-2.5 flex flex-wrap items-center justify-between gap-x-6 gap-y-1">
+    <div class="flex items-center gap-2.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-orange-light"></span>
+      <span class="text-white/90 font-semibold">A global STEM program for young builders. Developed by HyracTech.</span>
+    </div>
+    <div class="hidden sm:flex items-center gap-5 text-white/80 font-semibold">
+      <span>In Tanzania?</span>
+      <a href="https://afriqoelearningtz.com" target="_blank" rel="noopener">Visit Afriqo E-Learning Tanzania →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ───────────────────────── Header / Nav ───────────────────────── -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap flex items-center justify-between gap-6 py-3.5">
+
+    <a href="#top" class="flex items-center" aria-label="SonzaSpark home">
+      <img src="brand_assets/sonzaspark-logo.svg" alt="SonzaSpark" style="height: 44px; width: auto;" />
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-7">
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#build" class="nav-link">What we build</a>
+      <a href="#how" class="nav-link">How it runs</a>
+      <a href="#where" class="nav-link">Where</a>
+      <a href="#impact" class="nav-link">Impact</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2 md:gap-3">
+      <a href="https://afriqoelearningtz.com" target="_blank" rel="noopener" class="hidden md:inline-flex btn btn-outline-blue text-[13px] px-4 py-2.5">
+        <span class="chip-sq">TZ</span>
+        For Tanzania
+      </a>
+      <a href="#contact" class="btn btn-primary text-sm px-4 py-2.5 hidden sm:inline-flex">
+        Say hello
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <button type="button" id="menuBtn" class="lg:hidden w-11 h-11 rounded-xl border-2 border-line flex items-center justify-center text-ink hover:bg-orange-50 transition" aria-label="Open menu" aria-expanded="false" aria-controls="mobilePanel">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-backdrop" id="mobileBackdrop"></div>
+<aside class="mobile-panel" id="mobilePanel" aria-hidden="true">
+  <div class="flex items-center justify-between px-6 py-4 border-b-2 border-line">
+    <span class="text-sm font-black text-orange uppercase tracking-wider">Menu</span>
+    <button type="button" id="closeMenu" class="w-10 h-10 rounded-xl border-2 border-line flex items-center justify-center hover:bg-orange-50" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <nav class="flex flex-col px-6 py-6 gap-5 text-[17px]">
+    <a href="#projects" class="nav-link w-max">Projects</a>
+    <a href="#build" class="nav-link w-max">What we build</a>
+    <a href="#how" class="nav-link w-max">How it runs</a>
+    <a href="#where" class="nav-link w-max">Where it runs</a>
+    <a href="#impact" class="nav-link w-max">Impact</a>
+    <a href="#contact" class="nav-link w-max">Contact</a>
+    <div class="h-px bg-line my-2"></div>
+    <a href="#contact" class="btn btn-primary">Say hello</a>
+    <a href="https://afriqoelearningtz.com" target="_blank" rel="noopener" class="btn btn-outline-blue">
+      <span class="chip-sq">TZ</span>
+      For Tanzania
+    </a>
+  </nav>
+</aside>
+
+<!-- ───────────────────────── Hero ───────────────────────── -->
+<section id="top" class="hero">
+  <div class="hero-dots"></div>
+
+  <div class="wrap relative pt-14 pb-20 md:pt-20 md:pb-28">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+
+      <!-- Headline column -->
+      <div class="lg:col-span-7 reveal">
+        <div class="chip mb-6">
+          <span class="chip-dot"></span>
+          <span>Hands-on STEM for young builders</span>
+        </div>
+
+        <h1 class="h-xl mb-6">
+          Spark <span style="color: var(--orange);">curiosity.</span><br/>
+          Build <span style="color: var(--blue);">real things.</span>
+        </h1>
+
+        <p class="text-ink/80 text-[17px] md:text-[19px] leading-relaxed max-w-[58ch] mb-8 font-medium">
+          <span class="font-black text-ink">SonzaSpark</span> is a hands-on STEM program for curious young makers — robotics, coding, 3D printing, electronics and fabrication. Students design, build, test, and ship real projects.
+        </p>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="#projects" class="btn btn-primary">
+            See the projects
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="https://afriqoelearningtz.com" target="_blank" rel="noopener" class="btn btn-outline-blue">
+            <span class="chip-sq">TZ</span>
+            In Tanzania? Go to Afriqo
+          </a>
+        </div>
+
+        <!-- Social proof row -->
+        <div class="mt-12 pt-8 border-t-2 border-dashed border-ink/10">
+          <div class="text-[11px] uppercase tracking-[0.18em] text-muted font-black mb-4">What students build</div>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-ink font-bold text-[14.5px]">
+            <span>Robots</span>
+            <span class="text-orange text-xs">●</span>
+            <span>Circuits</span>
+            <span class="text-blue text-xs">●</span>
+            <span>3D-printed objects</span>
+            <span class="text-orange text-xs">●</span>
+            <span>Smart devices</span>
+            <span class="text-blue text-xs">●</span>
+            <span>Real solutions</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured project -->
+      <div class="lg:col-span-5 reveal">
+        <div class="featured">
+          <img src="photos/project-circuit-lamp.jpg" alt="SonzaSpark students building a circuit that lights up a lamp" class="featured-img" loading="eager" />
+          <div class="featured-tag">
+            <span>✺</span>
+            Live program
+          </div>
+          <div class="featured-caption">
+            <div class="text-[10px] uppercase tracking-[0.12em] text-orange-dark font-black mb-1">Latest Build</div>
+            <div class="text-ink text-[14px] font-extrabold leading-tight">A lamp that lights up — from a $5 Arduino circuit.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Projects ───────────────────────── -->
+<section id="projects" class="py-20 md:py-28 bg-white relative overflow-hidden">
+  <div class="wrap">
+
+    <div class="grid lg:grid-cols-12 gap-8 mb-14 items-end reveal">
+      <div class="lg:col-span-7">
+        <div class="eyebrow mb-3">Projects</div>
+        <h2 class="h-lg">
+          What students<br/>
+          actually <span style="color: var(--orange);">build.</span>
+        </h2>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="text-muted text-[16px] leading-relaxed max-w-[46ch] font-medium">
+          Not slides. Not simulations. Real circuits, real robots, real presentations — made by learners aged 8 to 18 in SonzaSpark classes, bootcamps and school clubs.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+
+      <!-- Project 1 -->
+      <article class="proj reveal">
+        <img src="photos/project-circuit-lamp.jpg" alt="Students around an Arduino circuit lighting a bulb" class="proj-img" loading="lazy" />
+        <div class="proj-body">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="pill">Electronics</span>
+            <span class="pill pill-blue">Ages 10–14</span>
+          </div>
+          <h3 class="h-sm">The $5 Arduino lamp</h3>
+          <p class="text-muted text-[14.5px] leading-relaxed">
+            Students wire up a transistor, a resistor and an Arduino to control a 220V bulb. First brush with power electronics — and the moment the lamp lit, everyone cheered.
+          </p>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="proj reveal">
+        <img src="photos/project-tinkercad.jpg" alt="A student designing a circuit in Tinkercad on a laptop" class="proj-img" loading="lazy" />
+        <div class="proj-body">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="pill pill-blue">Simulation → Build</span>
+            <span class="pill">Ages 8–16</span>
+          </div>
+          <h3 class="h-sm">Design before you solder</h3>
+          <p class="text-muted text-[14.5px] leading-relaxed">
+            Learners prototype circuits in Tinkercad on real laptops, then build the same thing in hardware. Catching bugs on screen is cheaper than catching them on fingers.
+          </p>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="proj reveal">
+        <img src="photos/exhibition.jpg" alt="SonzaSpark team at a Tanzanian exhibition building a wooden model house" class="proj-img" loading="lazy" />
+        <div class="proj-body">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="pill">Fabrication</span>
+            <span class="pill pill-blue">On the road</span>
+          </div>
+          <h3 class="h-sm">Taking it to the exhibition</h3>
+          <p class="text-muted text-[14.5px] leading-relaxed">
+            Students build model structures and live demos for the public at Nane Nane and school exhibitions. Learning to explain the work is half the lesson.
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Project pipeline line -->
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[13.5px] text-muted font-semibold">
+      <span class="font-black text-blue-dark">More projects coming</span>
+      <span class="text-orange">●</span>
+      <span>Line-following robots</span>
+      <span class="text-orange">●</span>
+      <span>3D-printed replacement parts</span>
+      <span class="text-orange">●</span>
+      <span>Smart farm sensors</span>
+      <span class="text-orange">●</span>
+      <span>IoT lights &amp; alarms</span>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── What students build (pillars) ───────────────────────── -->
+<section id="build" class="py-20 md:py-28 bg-cream border-y-2 border-line relative overflow-hidden">
+  <!-- decorative spark -->
+  <div class="spark-bg" style="top: 60px; right: -80px;" aria-hidden="true">
+    <svg viewBox="0 0 200 200" fill="none"><g fill="#f97316"><path d="M100 10 L108 92 L190 100 L108 108 L100 190 L92 108 L10 100 L92 92 Z"/></g></svg>
+  </div>
+
+  <div class="wrap relative">
+
+    <div class="grid lg:grid-cols-12 gap-8 mb-14 items-end reveal">
+      <div class="lg:col-span-7">
+        <div class="eyebrow eyebrow-blue mb-3">What we teach</div>
+        <h2 class="h-lg">
+          Six ways learners<br/>
+          become <span style="color: var(--orange);">builders.</span>
+        </h2>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="text-muted text-[16px] leading-relaxed max-w-[46ch] font-medium">
+          Every SonzaSpark learner moves between these areas as they grow — from making their first LED blink to shipping a project that solves a real-world problem.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <article class="card reveal">
+        <div class="ico mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M8 2h8l-1 3h-6zM5 5h14v7a5 5 0 01-5 5h-4a5 5 0 01-5-5V5zM10 22h4M12 17v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+        </div>
+        <h3 class="h-sm mb-2">Robotics</h3>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          Motors, sensors, chassis, microcontrollers. Autonomous robots that avoid obstacles, follow lines, or deliver things across the room.
+        </p>
+      </article>
+
+      <article class="card card-blue reveal">
+        <div class="ico blue mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6M14 4l-4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="h-sm mb-2">Coding</h3>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          Scratch for the youngest, micro:bit block-code in the middle, Arduino C and Python for older students. Loops, logic, and small games.
+        </p>
+      </article>
+
+      <article class="card reveal">
+        <div class="ico mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 7l9-5 9 5v10l-9 5-9-5V7zM3 7l9 5 9-5M12 12v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="h-sm mb-2">3D Printing &amp; Design</h3>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          Design in Tinkercad, slice in Cura, print in PLA. Students make keychains, phone stands, replacement parts, and their own toys.
+        </p>
+      </article>
+
+      <article class="card card-blue reveal">
+        <div class="ico blue mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M3 12a9 9 0 0118 0M6 12a6 6 0 0112 0M9 12a3 3 0 016 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="h-sm mb-2">Electronics &amp; IoT</h3>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          LEDs, breadboards, Arduino, sensors, Bluetooth, Wi-Fi. Smart lights, motion alarms, and devices that talk to a phone.
+        </p>
+      </article>
+
+      <article class="card reveal">
+        <div class="ico mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M14 4l6 6-10 10H4v-6L14 4zM13 5l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="h-sm mb-2">Fabrication</h3>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          Woodwork, cardboard engineering, laser engraving, and simple manufacturing. The physical half of every project.
+        </p>
+      </article>
+
+      <article class="card card-blue reveal">
+        <div class="ico blue mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="h-sm mb-2">Soft Skills</h3>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          Pitching your project, working in a team, debugging under pressure, and explaining what you built to a parent, a peer, or a judge.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── How SonzaSpark runs ───────────────────────── -->
+<section id="how" class="py-20 md:py-28 bg-white">
+  <div class="wrap">
+
+    <div class="grid lg:grid-cols-12 gap-8 mb-14 items-end reveal">
+      <div class="lg:col-span-7">
+        <div class="eyebrow mb-3">How it runs</div>
+        <h2 class="h-lg">
+          Six ways SonzaSpark<br/>
+          reaches <span style="color: var(--blue);">learners.</span>
+        </h2>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="text-muted text-[16px] leading-relaxed max-w-[46ch] font-medium">
+          The program is designed to meet students wherever they already are — at home on weekends, at school during term, out in the community during school holidays, and online for everyone else.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="runs reveal">
+        <div class="flex items-center gap-3">
+          <span class="pill">01</span>
+          <h3 class="h-sm">Weekend Classes</h3>
+        </div>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          Term-long cohorts, Saturdays or Sundays. Students move through beginner → intermediate → advanced robotics over three cycles.
+        </p>
+      </div>
+
+      <div class="runs reveal">
+        <div class="flex items-center gap-3">
+          <span class="pill pill-blue">02</span>
+          <h3 class="h-sm">Holiday Bootcamps</h3>
+        </div>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          Intensive 1–6 week programs during school breaks. Robotics, 3D printing, IoT and innovation challenges.
+        </p>
+      </div>
+
+      <div class="runs reveal">
+        <div class="flex items-center gap-3">
+          <span class="pill">03</span>
+          <h3 class="h-sm">School STEM Clubs</h3>
+        </div>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          Weekly in-school clubs — Robotics, Coding, Girls in STEM, 3D Design, Smart Agriculture. SonzaSpark brings the curriculum, kits and facilitators.
+        </p>
+      </div>
+
+      <div class="runs reveal">
+        <div class="flex items-center gap-3">
+          <span class="pill pill-blue">04</span>
+          <h3 class="h-sm">Online Classes &amp; Communities</h3>
+        </div>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          Self-paced courses on our LMS, live workshops over video, and open communities on <a href="https://hyrachub.com" target="_blank" rel="noopener" class="font-extrabold text-blue-dark hover:text-blue underline underline-offset-2 decoration-2">HyracHub</a> — for learners anywhere in the world.
+        </p>
+      </div>
+
+      <div class="runs reveal">
+        <div class="flex items-center gap-3">
+          <span class="pill">05</span>
+          <h3 class="h-sm">Mobile STEM Lab</h3>
+        </div>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          Laptops, projectors, robotics kits and 3D printers packed into a travelling lab — reaching schools and communities that can't come to a center.
+        </p>
+      </div>
+
+      <div class="runs reveal">
+        <div class="flex items-center gap-3">
+          <span class="pill pill-blue">06</span>
+          <h3 class="h-sm">Teacher Training</h3>
+        </div>
+        <p class="text-muted text-[14.5px] leading-relaxed">
+          We train teachers to run their own STEM clubs inside their schools — the fastest way for the program to scale beyond our direct trainers.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Student Showcases highlight banner -->
+    <div class="runs reveal mt-5 flex flex-col sm:flex-row items-center sm:items-stretch gap-6 sm:gap-8 text-center sm:text-left" style="background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%); color: #fff; border: none; padding: 1.75rem 2rem;">
+      <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-white/15 flex items-center justify-center">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L15 8l6 1-4.5 4.5 1 6L12 16l-5.5 3.5 1-6L3 9l6-1 3-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="rgba(255,255,255,0.2)"/></svg>
+      </div>
+      <div class="flex-1">
+        <div class="text-[12px] uppercase tracking-[0.14em] font-black opacity-90 mb-1">Also happening</div>
+        <h3 class="h-sm text-white mb-1">Student Showcases</h3>
+        <p class="text-white/90 text-[14px] leading-relaxed font-semibold max-w-[62ch]">
+          Every cohort ends with a demo day — students pitch and demo their builds to parents, teachers, and sometimes press.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Where SonzaSpark operates ───────────────────────── -->
+<section id="where" class="py-20 md:py-28 bg-cream border-y-2 border-line">
+  <div class="wrap">
+
+    <div class="grid lg:grid-cols-12 gap-8 mb-14 items-end reveal">
+      <div class="lg:col-span-7">
+        <div class="eyebrow eyebrow-blue mb-3">Where it operates</div>
+        <h2 class="h-lg">
+          One global program.<br/>
+          Local <span style="color: var(--orange);">delivery partners.</span>
+        </h2>
+      </div>
+      <div class="lg:col-span-5">
+        <p class="text-muted text-[16px] leading-relaxed max-w-[46ch] font-medium">
+          SonzaSpark is developed by HyracTech and delivered in each country by a local education partner — the people who know the schools, the parents, and the language.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid gap-4 max-w-[920px] reveal">
+
+      <!-- Tanzania -->
+      <a href="https://afriqoelearningtz.com" target="_blank" rel="noopener" class="op-row group">
+        <span class="op-flag">TZ</span>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-extrabold text-ink text-[17px]">Tanzania</span>
+            <span class="pill">Live</span>
+          </div>
+          <div class="text-[14px] text-muted font-semibold mt-0.5">
+            Operated by Afriqo E-Learning Tanzania · Arusha
+          </div>
+        </div>
+        <span class="text-orange font-black text-[14px] inline-flex items-center gap-1 group-hover:text-orange-dark transition-colors">
+          Visit site
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3h8v8M3 11l8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <!-- Kenya coming -->
+      <div class="op-row">
+        <span class="op-flag blue">KE</span>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-extrabold text-ink text-[17px]">Kenya</span>
+            <span class="pill pill-blue">Coming soon</span>
+          </div>
+          <div class="text-[14px] text-muted font-semibold mt-0.5">
+            Nakuru pilot in planning
+          </div>
+        </div>
+        <span class="text-muted font-bold text-[13px]">—</span>
+      </div>
+
+      <!-- Your country -->
+      <a href="#contact" class="op-row group">
+        <span class="op-flag gray">?</span>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-extrabold text-ink text-[17px]">Your country?</span>
+            <span class="pill pill-gray">Partner with us</span>
+          </div>
+          <div class="text-[14px] text-muted font-semibold mt-0.5">
+            Interested in bringing SonzaSpark to your schools? Talk to HyracTech.
+          </div>
+        </div>
+        <span class="text-ink font-black text-[14px] inline-flex items-center gap-1 group-hover:text-orange transition-colors">
+          Get in touch
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Impact ───────────────────────── -->
+<section id="impact" class="py-20 md:py-24 bg-white">
+  <div class="wrap">
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-10 reveal">
+      <div>
+        <div class="eyebrow mb-3">Impact so far</div>
+        <h2 class="h-lg">The numbers we're building on.</h2>
+      </div>
+      <p class="text-muted max-w-[46ch] text-[14.5px] font-medium">
+        Pilot and ongoing delivery across Tanzania, from the first class in Arusha, June 2025, through 2026 school outreach.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 reveal">
+      <div>
+        <div class="stat-num">1,000<span class="accent">+</span></div>
+        <div class="stat-lbl">Students reached</div>
+      </div>
+      <div>
+        <div class="stat-num">10<span class="accent">+</span></div>
+        <div class="stat-lbl">Schools engaged</div>
+      </div>
+      <div>
+        <div class="stat-num">~60<span class="accent">%</span></div>
+        <div class="stat-lbl">Girls' participation</div>
+      </div>
+      <div>
+        <div class="stat-num">50<span class="accent-b">+</span></div>
+        <div class="stat-lbl">Student projects</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── About / Partner band ───────────────────────── -->
+<section class="py-16 md:py-20 bg-cream border-y-2 border-line">
+  <div class="wrap">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center reveal">
+      <div class="lg:col-span-7">
+        <div class="eyebrow mb-3">About the program</div>
+        <h2 class="h-lg mb-5">
+          Developed by HyracTech.<br/>
+          Delivered <span style="color: var(--orange);">on the ground.</span>
+        </h2>
+        <p class="text-ink/80 text-[16px] md:text-[17px] leading-relaxed max-w-[62ch] font-medium">
+          SonzaSpark is a global STEM program designed by <span class="font-extrabold">HyracTech</span>. In each country where it operates, a local education partner handles delivery — the schools, the parents, the facilitators, the language. In Tanzania, that partner is <a href="https://afriqoelearningtz.com" target="_blank" rel="noopener" class="font-extrabold text-orange hover:text-orange-dark underline underline-offset-2 decoration-2">Afriqo E-Learning Tanzania</a>.
+        </p>
+      </div>
+
+      <div class="lg:col-span-5">
+        <div class="bg-white border-2 border-line rounded-2xl p-7">
+          <div class="eyebrow eyebrow-blue mb-4">Partner structure</div>
+          <div class="space-y-4">
+            <div class="flex items-center gap-4">
+              <span class="w-12 h-12 rounded-xl bg-blue-50 text-blue-dark flex items-center justify-center font-black text-[15px]">HT</span>
+              <div>
+                <div class="font-extrabold text-ink">HyracTech</div>
+                <div class="text-[13px] text-muted font-semibold">Program &amp; technology</div>
+              </div>
+            </div>
+            <div class="h-px bg-line"></div>
+            <div class="flex items-center gap-4">
+              <span class="w-12 h-12 rounded-xl bg-orange-50 text-orange-dark flex items-center justify-center font-black text-[15px]">AF</span>
+              <div>
+                <div class="font-extrabold text-ink">Afriqo E-Learning Tanzania</div>
+                <div class="text-[13px] text-muted font-semibold">Tanzania country operator</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── CTA / Contact ───────────────────────── -->
+<section id="contact" class="py-20 md:py-28 dark-cta">
+  <div class="wrap relative">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+
+      <div class="lg:col-span-7 reveal">
+        <div class="chip mb-6" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff;">
+          <span class="chip-dot"></span>
+          <span>Get in touch</span>
+        </div>
+        <h2 class="h-xl text-white mb-6">
+          Let's build something.
+        </h2>
+        <p class="text-white/80 text-[17px] md:text-[19px] leading-relaxed max-w-[56ch] mb-8 font-medium">
+          A school curious about hosting a STEM club. A sponsor interested in reaching more young builders. A country partner who wants to bring SonzaSpark to new schools. Reach out — we'll respond.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="mailto:hello@sonzaspark.com" class="btn btn-primary">
+            Email us
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="https://afriqoelearningtz.com" target="_blank" rel="noopener" class="btn" style="background: rgba(255,255,255,0.1); color: #fff; border: 2px solid rgba(255,255,255,0.3);">
+            <span class="chip-sq" style="background: rgba(255,255,255,0.15); color: #fff;">TZ</span>
+            In Tanzania → Afriqo
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 reveal">
+        <div class="bg-white/5 backdrop-blur-sm border-2 border-white/15 rounded-2xl p-7">
+          <div class="eyebrow mb-5" style="color: rgba(255,255,255,0.65);">Contact</div>
+
+          <div class="space-y-5 text-[14.5px]">
+            <div>
+              <div class="text-white/50 text-[11px] uppercase tracking-wider font-black mb-1">Email</div>
+              <a class="text-white font-extrabold hover:text-orange-light transition-colors text-[15px]" href="mailto:hello@sonzaspark.com">hello@sonzaspark.com</a>
+            </div>
+            <div class="h-px bg-white/15"></div>
+            <div>
+              <div class="text-white/50 text-[11px] uppercase tracking-wider font-black mb-1">For Tanzania enquiries</div>
+              <a class="text-white font-bold hover:text-orange-light transition-colors" href="https://afriqoelearningtz.com" target="_blank" rel="noopener">afriqoelearningtz.com →</a>
+            </div>
+            <div class="h-px bg-white/15"></div>
+            <div>
+              <div class="text-white/50 text-[11px] uppercase tracking-wider font-black mb-3">Follow @sonzaspark</div>
+              <div class="flex items-center gap-3">
+                <a href="#" class="w-11 h-11 rounded-xl bg-white/10 border-2 border-white/15 flex items-center justify-center text-white hover:bg-orange hover:border-orange transition-colors" aria-label="Instagram">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="1" fill="currentColor"/></svg>
+                </a>
+                <a href="#" class="w-11 h-11 rounded-xl bg-white/10 border-2 border-white/15 flex items-center justify-center text-white hover:bg-orange hover:border-orange transition-colors" aria-label="TikTok">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 8.5a6.5 6.5 0 01-4-1.4V15a5 5 0 11-5-5v3a2 2 0 102 2V2h3a4 4 0 004 4v2.5z"/></svg>
+                </a>
+                <a href="#" class="w-11 h-11 rounded-xl bg-white/10 border-2 border-white/15 flex items-center justify-center text-white hover:bg-orange hover:border-orange transition-colors" aria-label="YouTube">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 7.5a3 3 0 00-2-2C18 5 12 5 12 5s-6 0-8 .5a3 3 0 00-2 2A32 32 0 002 12a32 32 0 00.5 4.5 3 3 0 002 2C6.5 19 12 19 12 19s6 0 8-.5a3 3 0 002-2A32 32 0 0022 12a32 32 0 00-.5-4.5zM10 15V9l5 3-5 3z"/></svg>
+                </a>
+                <a href="#" class="w-11 h-11 rounded-xl bg-white/10 border-2 border-white/15 flex items-center justify-center text-white hover:bg-orange hover:border-orange transition-colors" aria-label="Facebook">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10h3V7h-3V5a1 1 0 011-1h2V1h-3a4 4 0 00-4 4v2H7v3h2v10h4V10z"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Footer ───────────────────────── -->
+<footer class="bg-ink text-white pt-14 pb-10">
+  <div class="wrap">
+    <div class="grid md:grid-cols-12 gap-10 pb-10 border-b border-white/10">
+
+      <div class="md:col-span-5">
+        <div class="mb-5">
+          <img src="brand_assets/sonzaspark-logo.svg" alt="SonzaSpark" style="height: 54px; width: auto;" />
+        </div>
+        <p class="text-white/60 text-[14.5px] leading-relaxed max-w-[42ch] font-medium">
+          A hands-on STEM program for young builders. Developed by HyracTech. In Tanzania, delivered by Afriqo E-Learning Tanzania.
+        </p>
+      </div>
+
+      <div class="md:col-span-2">
+        <div class="text-[11px] uppercase tracking-[0.18em] text-white/45 font-black mb-4">Explore</div>
+        <ul class="space-y-2.5 text-[14px] font-semibold">
+          <li><a href="#projects" class="text-white/80 hover:text-orange-light transition-colors">Projects</a></li>
+          <li><a href="#build" class="text-white/80 hover:text-orange-light transition-colors">What we build</a></li>
+          <li><a href="#how" class="text-white/80 hover:text-orange-light transition-colors">How it runs</a></li>
+          <li><a href="#where" class="text-white/80 hover:text-orange-light transition-colors">Where</a></li>
+          <li><a href="#impact" class="text-white/80 hover:text-orange-light transition-colors">Impact</a></li>
+        </ul>
+      </div>
+
+      <div class="md:col-span-2">
+        <div class="text-[11px] uppercase tracking-[0.18em] text-white/45 font-black mb-4">Partners</div>
+        <ul class="space-y-2.5 text-[14px] font-semibold">
+          <li class="text-white/80">HyracTech <span class="text-white/40 font-normal">· program</span></li>
+          <li><a href="https://afriqoelearningtz.com" target="_blank" rel="noopener" class="text-white/80 hover:text-orange-light transition-colors">Afriqo Tanzania ↗</a></li>
+        </ul>
+      </div>
+
+      <div class="md:col-span-3">
+        <div class="text-[11px] uppercase tracking-[0.18em] text-white/45 font-black mb-4">Reach us</div>
+        <ul class="space-y-2.5 text-[14px] font-semibold">
+          <li><a href="mailto:hello@sonzaspark.com" class="text-white/80 hover:text-orange-light transition-colors break-all">hello@sonzaspark.com</a></li>
+          <li class="text-white/60">@sonzaspark on social</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="pt-8 flex flex-wrap items-center justify-between gap-4 text-[12.5px] text-white/50 font-semibold">
+      <div>© 2026 SonzaSpark. A HyracTech program.</div>
+      <div>Local delivery by Afriqo E-Learning Tanzania &amp; local partners.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    }
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Fallback: force visibility for any element the IO can't reach
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in'));
+  }, 1500);
+
+  // Header shadow on scroll
+  const header = document.getElementById('siteHeader');
+  const onScroll = () => {
+    if (window.scrollY > 10) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const closeMenu = document.getElementById('closeMenu');
+  const panel = document.getElementById('mobilePanel');
+  const backdrop = document.getElementById('mobileBackdrop');
+  const openPanel = () => {
+    panel.classList.add('open');
+    backdrop.classList.add('show');
+    panel.setAttribute('aria-hidden', 'false');
+    menuBtn.setAttribute('aria-expanded', 'true');
+  };
+  const closePanel = () => {
+    panel.classList.remove('open');
+    backdrop.classList.remove('show');
+    panel.setAttribute('aria-hidden', 'true');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  };
+  menuBtn.addEventListener('click', openPanel);
+  closeMenu.addEventListener('click', closePanel);
+  backdrop.addEventListener('click', closePanel);
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', closePanel));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
+</script>
+</body>
+</html>
